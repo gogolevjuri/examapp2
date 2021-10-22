@@ -21,8 +21,8 @@ pipeline {
         }       
         stage('Docker Build'){
             steps{
-                echo "Create docker image gogolevjuri/firstapp:${DOCKER_TAG} "
-                sh "docker build . -t gogolevjuri/firstapp:latest -t gogolevjuri/firstapp:${DOCKER_TAG} "
+                echo "Create docker image gogolevjuri/secondapp:${DOCKER_TAG} "
+                sh "docker build . -t gogolevjuri/secondapp:latest -t gogolevjuri/secondapp:${DOCKER_TAG} "
             }
         }
         stage('DockerHub Push'){
@@ -32,14 +32,14 @@ pipeline {
                     sh "docker login -u gogolevjuri -p ${dockerHubPwd}"
                 }
                 echo 'Docker push now'
-                sh "docker push gogolevjuri/firstapp --all-tags "
+                sh "docker push gogolevjuri/secondapp --all-tags "
             }
         }
         stage('clear docker images') {
             steps {
                 echo 'removing images....'
-                sh "docker rmi gogolevjuri/firstapp:${DOCKER_TAG} "
-                sh "docker rmi gogolevjuri/firstapp:latest "
+                sh "docker rmi gogolevjuri/secondapp:${DOCKER_TAG} "
+                sh "docker rmi gogolevjuri/secondapp:latest "
             }
         }
         stage('Docker Deploy'){
